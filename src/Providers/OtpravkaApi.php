@@ -507,11 +507,14 @@ class OtpravkaApi implements LoggerAwareInterface
      * @return array
      * @throws RussianPostException
      */
-    public function createBatch($id_list, $sending_date = null)
+    public function createBatch($id_list, $sending_date = null, $use_online_balance = false)
     {
         $method = 'user/shipment';
         if ($sending_date)
             $method .= '?sending-date='.$sending_date->format('Y-m-d');
+            if ($use_online_balance === true) {
+                $method .= "&use-online-balance=true";
+            }
 
         return $this->callApi('POST', $method, $id_list);
     }
